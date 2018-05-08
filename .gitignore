@@ -1,3 +1,5 @@
 venv36
 .gitattributes
 .idea\*
+*.xml
+.idea/.name
