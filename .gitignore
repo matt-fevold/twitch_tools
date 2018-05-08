@@ -3,3 +3,4 @@ venv36
 .idea\*
 *.xml
 .idea/.name
+*.iml
