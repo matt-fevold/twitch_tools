@@ -1,6 +1,6 @@
 import win32gui
 import time
-
+import os
 
 def main():
     print("Finding Spotify Window. Please click open Spotify.")
@@ -15,6 +15,7 @@ def main():
             pass
         else:
             current_song = maybe_new_song
+            os.system('cls')  # clear stdout
             print("\nCurrently Playing:", current_song)
 
 
