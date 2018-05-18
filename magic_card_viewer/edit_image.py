@@ -1,4 +1,4 @@
-from PIL import Image
+from PIL import Image, ImageFont, ImageDraw
 import random
 import string
 
@@ -19,13 +19,24 @@ class MagicImage:
 
     def crop_image(self):
         """
-        crop the image and  save it
+        crop the image to just the top part of the card.
         :return:
         """
-        width = self.open_image.size[0]
-        height = self.open_image.size[1]
-        crop_tuple = (0, 0, width, height/5)
+        self.image_width = self.open_image.size[0]
+        self.image_height = self.open_image.size[1]
+        crop_tuple = (0, 0, self.image_width, self.image_height/5)
         self.open_image = self.open_image.crop(crop_tuple)
+
+    def add_card_name(self):
+        # font = ImageFont.truetype(<font-file>, <font-size>)
+        # font-file should be present in provided path.
+        font = ImageFont.truetype("./calibri.ttf", 64)
+
+        draw = ImageDraw.Draw(self.open_image)
+        # draw.text((x, y),"Sample Text",(r,g,b))
+        print(self.image_width)
+        white = (255, 255, 255)  # gotta do some stuff to find width and such
+        draw.text((0, 20), self.name, white, font=font)
 
     def save_image(self, save_name):
         """
@@ -39,8 +50,8 @@ class MagicImage:
             print("Something went wrong saving the file! {}".format(e))
 
     def process_image(self):
-
         self.crop_image()
+        self.add_card_name()
         self.save_image('./assets/' + self.name + "-cropped-" + self.id_generator() + '.jpg')
 
     def id_generator(self, size=6):
@@ -55,6 +66,5 @@ class MagicImage:
 
 
 if __name__ == '__main__':
-    test = MagicImage("./assets/m19-71-scholar-of-stars.jpg", "placeholder_name")
+    test = MagicImage("./assets/m19-71-scholar-of-stars.jpg", "Scholar Of Stars")
     test.process_image()
-
